@@ -5,19 +5,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coursespringboot.workshop.domain.Categoria;
-import com.coursespringboot.workshop.repositories.CategoriaRepository;
+import com.coursespringboot.workshop.domain.Cidade;
+import com.coursespringboot.workshop.repositories.CidadeRepository;
 import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
 
 @Service
-public class CategoriaService {
+public class CidadeService {
 	
 	@Autowired
-	private CategoriaRepository repo;
+	private CidadeRepository repo;
 	
-	public Categoria findById(Integer id) {
-		Optional<Categoria> obj = repo.findById(id);
+	public Cidade findById(Integer id) {
+		Optional<Cidade> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException(
-		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cidade.class.getName()));
 	}
 }

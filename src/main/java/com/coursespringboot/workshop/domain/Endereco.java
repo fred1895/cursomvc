@@ -9,29 +9,38 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode
-public class Cidade implements Serializable{
+public class Endereco implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String bairro;
+	private String cep;
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "estado_id")
-	private Estado estado;
+	@JoinColumn(name = "cliente_id")
+	private Client client;
+	
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
 }

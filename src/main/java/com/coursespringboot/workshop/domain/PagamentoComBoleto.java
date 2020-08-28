@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.coursespringboot.workshop.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,10 @@ import lombok.Setter;
 @Setter
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataPagamento;
 
 	public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido, Date dataVencimento, Date dataPagamento) {

@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.coursespringboot.workshop.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,8 @@ public abstract class Pagamento implements Serializable {
 	@Id
 	private Integer id;
 	private Integer estadoPagamento;
-
+	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId

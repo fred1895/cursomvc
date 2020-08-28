@@ -13,6 +13,7 @@ import com.coursespringboot.workshop.domain.Cidade;
 import com.coursespringboot.workshop.domain.Client;
 import com.coursespringboot.workshop.domain.Endereco;
 import com.coursespringboot.workshop.domain.Estado;
+import com.coursespringboot.workshop.domain.ItemPedido;
 import com.coursespringboot.workshop.domain.Pagamento;
 import com.coursespringboot.workshop.domain.PagamentoComBoleto;
 import com.coursespringboot.workshop.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.coursespringboot.workshop.repositories.CidadeRepository;
 import com.coursespringboot.workshop.repositories.ClientRepository;
 import com.coursespringboot.workshop.repositories.EnderecoRepository;
 import com.coursespringboot.workshop.repositories.EstadoRepository;
+import com.coursespringboot.workshop.repositories.ItemPedidoRepository;
 import com.coursespringboot.workshop.repositories.PagamentoRepository;
 import com.coursespringboot.workshop.repositories.PedidoRepository;
 import com.coursespringboot.workshop.repositories.ProdutoRepository;
@@ -54,6 +56,9 @@ public class CursomvcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepo;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomvcApplication.class, args);
@@ -121,6 +126,20 @@ public class CursomvcApplication implements CommandLineRunner {
 		
 		pedidoRepo.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepo.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.0, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.0, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.0, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepo.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
 	}
 
 

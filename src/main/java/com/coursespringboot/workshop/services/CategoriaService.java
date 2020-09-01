@@ -1,5 +1,6 @@
 package com.coursespringboot.workshop.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityJpaException("Erro de integridate. Não pode excluir categorias com associações. ");
 		}
+	}
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
 		
 	}
+	
 }

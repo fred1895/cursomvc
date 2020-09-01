@@ -37,7 +37,7 @@ public class CursomvcApplication implements CommandLineRunner {
 	private CategoriaRepository categoriaRepo;
 	
 	@Autowired
-	private ProdutoRepository produtoRepo;
+	private ProdutoRepository  produtoRepo;
 	
 	@Autowired
 	private EstadoRepository estadoRepo;

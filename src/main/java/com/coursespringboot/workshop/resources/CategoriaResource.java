@@ -28,19 +28,6 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	/*
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Categoria> listar() {
-		Categoria cat1 = new Categoria(1, "Fred");
-		Categoria cat2 = new Categoria(2, "Camila");
-		
-		List<Categoria> list = new ArrayList<>();
-		
-		list.add(cat1);
-		list.add(cat2);
-		return list;
-	}
-	*/
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
@@ -90,4 +77,5 @@ public class CategoriaResource {
 		Page<CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
+	
 }

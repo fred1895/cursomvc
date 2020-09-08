@@ -10,9 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.coursespringboot.workshop.domain.Cidade;
 import com.coursespringboot.workshop.domain.Client;
+import com.coursespringboot.workshop.domain.Endereco;
+import com.coursespringboot.workshop.domain.enums.TipoCliente;
 import com.coursespringboot.workshop.dto.ClientDTO;
+import com.coursespringboot.workshop.dto.ClientNewDTO;
 import com.coursespringboot.workshop.repositories.ClientRepository;
+import com.coursespringboot.workshop.repositories.EnderecoRepository;
 import com.coursespringboot.workshop.services.exceptions.DataIntegrityJpaException;
 import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
 
@@ -22,10 +27,20 @@ public class ClientService {
 	@Autowired
 	private ClientRepository repo;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public Client findById(Integer id) {
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException(
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
+	}
+	
+	public Client insert(Client obj) {
+		obj.setId(null);
+		obj = repo.save(obj);
+		enderecoRepository.saveAll(obj.getEnderecos());
+		return obj;
 	}
 	
 	public Client update(Client obj) {
@@ -61,5 +76,20 @@ public class ClientService {
 	
 	public Client fromDTO(ClientDTO objDTO) {
 		return new Client(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null, null);
+	}
+	
+	public Client fromDTO(ClientNewDTO objDTO) {
+		Client cli = new Client(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()));
+		Cidade cidade = new Cidade(objDTO.getCidade(), null, null);
+		Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getBairro(), cli, cidade);
+		cli.getEnderecos().add(end);
+		cli.getTelefones().add(objDTO.getTelefone1());
+		if (objDTO.getTelefone2() != null) {
+			cli.getTelefones().add(objDTO.getTelefone2());
+		}
+		if (objDTO.getTelefone3() != null) {
+			cli.getTelefones().add(objDTO.getTelefone3());
+		}
+		return cli;
 	}
 }

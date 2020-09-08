@@ -18,33 +18,31 @@ import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoExce
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	private CategoriaRepository repo;
-	
+
 	public Categoria findById(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException(
-		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
-	
+
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
-	
+
 	public Categoria update(Categoria obj) {
 		Categoria newObj = findById(obj.getId());
 		updateDate(newObj, obj);
 		return repo.save(newObj);
 	}
-	
+
 	private void updateDate(Categoria newObj, Categoria obj) {
 		newObj.setNome(obj.getNome());
 	}
 
-	
 	public void delete(Integer id) {
 		findById(id);
 		try {
@@ -56,17 +54,16 @@ public class CategoriaService {
 
 	public List<Categoria> findAll() {
 		return repo.findAll();
-		
+
 	}
-	
+
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),
-				orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO obj) {
 		return new Categoria(obj.getId(), obj.getNome());
 	}
-	
+
 }

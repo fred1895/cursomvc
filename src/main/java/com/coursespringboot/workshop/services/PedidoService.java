@@ -3,10 +3,9 @@ package com.coursespringboot.workshop.services;
 import java.util.Date;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.coursespringboot.workshop.domain.ItemPedido;
 import com.coursespringboot.workshop.domain.PagamentoComBoleto;
@@ -22,6 +21,9 @@ public class PedidoService {
 	
 	@Autowired
 	private PedidoRepository repo;
+	
+	@Autowired
+	private ClientService clientService;
 	
 	@Autowired
 	private BoletoService boletoService;
@@ -41,9 +43,11 @@ public class PedidoService {
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
-	public @Valid Pedido insert(@Valid Pedido obj) {
+	@Transactional
+	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstant(new Date());
+		obj.setClient(clientService.findById(obj.getClient().getId()));
 		obj.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -54,10 +58,12 @@ public class PedidoService {
 		pagamentoRepository.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.findById(ip.getProduto().getId()).getPrice());
+			ip.setProduto(produtoService.findById(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPrice());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }

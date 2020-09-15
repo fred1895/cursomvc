@@ -31,6 +31,7 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private String senha;
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -46,15 +47,18 @@ public class Client implements Serializable {
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 
-	public Client(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Client(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCode();
+		this.senha = senha;
 	}
 
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -113,6 +117,16 @@ public class Client implements Serializable {
 
 	public List<Pedido> getPedidos() {
 		return pedidos;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

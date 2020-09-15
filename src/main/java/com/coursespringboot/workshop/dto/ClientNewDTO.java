@@ -52,4 +52,7 @@ public class ClientNewDTO implements Serializable{
 	private String telefone3;
 	
 	private Integer cidade;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	private String senha;
 }

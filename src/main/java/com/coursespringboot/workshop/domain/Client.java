@@ -5,24 +5,25 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.coursespringboot.workshop.domain.enums.Perfil;
 import com.coursespringboot.workshop.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +32,8 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@JsonIgnore
 	private String senha;
 	private String email;
 	private String cpfOuCnpj;
@@ -39,14 +42,22 @@ public class Client implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	List<Pedido> pedidos = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 
+	public Client() {
+		addPerfil(Perfil.CLIENTE);
+	}
+	
 	public Client(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
@@ -55,10 +66,9 @@ public class Client implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCode();
 		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
 	}
 
-	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -123,10 +133,16 @@ public class Client implements Serializable {
 		return senha;
 	}
 
-
-
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(p -> Perfil.toEnum(p)).collect(Collectors.toSet());
+	}
+
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCode());
 	}
 
 }

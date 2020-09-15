@@ -20,6 +20,7 @@ import com.coursespringboot.workshop.domain.PagamentoComCartao;
 import com.coursespringboot.workshop.domain.Pedido;
 import com.coursespringboot.workshop.domain.Produto;
 import com.coursespringboot.workshop.domain.enums.EstadoPagamento;
+import com.coursespringboot.workshop.domain.enums.Perfil;
 import com.coursespringboot.workshop.domain.enums.TipoCliente;
 import com.coursespringboot.workshop.repositories.CategoriaRepository;
 import com.coursespringboot.workshop.repositories.CidadeRepository;
@@ -122,11 +123,15 @@ public class DBService {
 		estadoRepo.saveAll(Arrays.asList(e1, e2));
 		cidadeRepo.saveAll(Arrays.asList(c1, c2, c3, c4));
 		
-		Client cli1 = new Client(null, "Fred", "fredericonascimento97@gmail.com", "4581254785", TipoCliente.PESSOAFISICA, be.encode("fred"));
-		Client cli2 = new Client(null, "Maria", "maria@gmail.com", "37278264", TipoCliente.PESSOAJURIDICA, be.encode("maria"));
+		Client cli1 = new Client(null, "Fred", "fredericonascimento97@gmail.com", "48794662045", TipoCliente.PESSOAFISICA, be.encode("fred"));
+		Client cli2 = new Client(null, "Maria", "maria@gmail.com", "24367831019", TipoCliente.PESSOAJURIDICA, be.encode("maria"));
+		Client cli3 = new Client(null, "Rodrigo Caio", "rodrigo@gmail.com", "62539546013", TipoCliente.PESSOAJURIDICA, be.encode("rodrigo"));
+		cli3.addPerfil(Perfil.ADMIN);
+		
 		
 		cli1.getTelefones().addAll(Arrays.asList("988776655", "26209876"));
-		cli2.getTelefones().addAll(Arrays.asList("988336655", "26339876"));
+		cli2.getTelefones().addAll(Arrays.asList("988336999", "26339844"));
+		cli3.getTelefones().addAll(Arrays.asList("988331521", "26339871"));
 		
 		Endereco end1 = new Endereco(null, "Rua das arraias", "26", "Casa 2", "Cajueiro", "28924248", cli1, c1);
 		Endereco end2 = new Endereco(null, "Rua das flores", "36", "Casa 1", "Cajo", "28666248", cli2, c4);
@@ -134,8 +139,10 @@ public class DBService {
 		Endereco end4 = new Endereco(null, "Rua das olivias", "6", "Casa 5", "Pe", "28446278", cli2, c2);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end3));
+		cli2.getEnderecos().addAll(Arrays.asList(end2));
+		cli3.getEnderecos().addAll(Arrays.asList(end4));
 		
-		clientRepo.saveAll(Arrays.asList(cli1, cli2));
+		clientRepo.saveAll(Arrays.asList(cli1, cli2, cli3));
 		enderecoRepo.saveAll(Arrays.asList(end1, end2, end3, end4));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

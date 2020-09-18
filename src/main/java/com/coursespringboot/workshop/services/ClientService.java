@@ -21,7 +21,7 @@ import com.coursespringboot.workshop.dto.ClientNewDTO;
 import com.coursespringboot.workshop.repositories.ClientRepository;
 import com.coursespringboot.workshop.repositories.EnderecoRepository;
 import com.coursespringboot.workshop.security.UserSS;
-import com.coursespringboot.workshop.services.exceptions.AuthorzationException;
+import com.coursespringboot.workshop.services.exceptions.AuthorizationException;
 import com.coursespringboot.workshop.services.exceptions.DataIntegrityJpaException;
 import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
 
@@ -41,7 +41,7 @@ public class ClientService {
 		UserSS userSS = UserService.authenticated();
 		
 		if (userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId())) {
-			throw new AuthorzationException("Acesso negado");
+			throw new AuthorizationException("Acesso negado");
 		}
 		
 		Optional<Client> obj = repo.findById(id);

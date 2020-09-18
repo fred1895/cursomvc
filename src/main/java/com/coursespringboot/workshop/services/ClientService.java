@@ -14,11 +14,14 @@ import org.springframework.stereotype.Service;
 import com.coursespringboot.workshop.domain.Cidade;
 import com.coursespringboot.workshop.domain.Client;
 import com.coursespringboot.workshop.domain.Endereco;
+import com.coursespringboot.workshop.domain.enums.Perfil;
 import com.coursespringboot.workshop.domain.enums.TipoCliente;
 import com.coursespringboot.workshop.dto.ClientDTO;
 import com.coursespringboot.workshop.dto.ClientNewDTO;
 import com.coursespringboot.workshop.repositories.ClientRepository;
 import com.coursespringboot.workshop.repositories.EnderecoRepository;
+import com.coursespringboot.workshop.security.UserSS;
+import com.coursespringboot.workshop.services.exceptions.AuthorzationException;
 import com.coursespringboot.workshop.services.exceptions.DataIntegrityJpaException;
 import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
 
@@ -35,6 +38,12 @@ public class ClientService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Client findById(Integer id) {
+		UserSS userSS = UserService.authenticated();
+		
+		if (userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId())) {
+			throw new AuthorzationException("Acesso negado");
+		}
+		
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException(
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));

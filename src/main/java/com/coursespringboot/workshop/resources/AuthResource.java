@@ -34,12 +34,10 @@ public class AuthResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	/*
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO emailDto) {
 		authService.sendNewPassword(emailDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}
-	*/
 
 }

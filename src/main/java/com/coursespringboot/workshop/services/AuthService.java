@@ -10,9 +10,9 @@ import com.coursespringboot.workshop.domain.Client;
 import com.coursespringboot.workshop.repositories.ClientRepository;
 import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
 
-//@Service
+@Service
 public class AuthService {
-	/*
+	
 	@Autowired
 	private ClientRepository clientRepository; 
 	
@@ -54,5 +54,4 @@ public class AuthService {
 			return (char) (rand.nextInt(26 + 97));
 		}
 	}
-	*/
 }

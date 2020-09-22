@@ -52,7 +52,6 @@ public class PedidoService {
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
-	/*
 	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
@@ -76,7 +75,6 @@ public class PedidoService {
 		mailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
-	*/
 	
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS userSS = UserService.authenticated();

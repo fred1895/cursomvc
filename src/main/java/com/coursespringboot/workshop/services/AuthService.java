@@ -12,6 +12,7 @@ import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoExce
 
 @Service
 public class AuthService {
+	
 	@Autowired
 	private ClientRepository clientRepository; 
 	

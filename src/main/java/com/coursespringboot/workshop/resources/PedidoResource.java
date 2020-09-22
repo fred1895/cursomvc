@@ -31,7 +31,7 @@ public class PedidoResource {
 		Pedido obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	/*
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
 		obj = service.insert(obj);
@@ -39,7 +39,6 @@ public class PedidoResource {
 			.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	*/
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<Pedido>> findPage(

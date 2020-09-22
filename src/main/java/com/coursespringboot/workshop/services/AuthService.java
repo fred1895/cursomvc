@@ -1,18 +1,9 @@
 package com.coursespringboot.workshop.services;
 
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.coursespringboot.workshop.domain.Client;
-import com.coursespringboot.workshop.repositories.ClientRepository;
-import com.coursespringboot.workshop.services.exceptions.ObjetoNaoEncontradoException;
-
-@Service
+//@Service
 public class AuthService {
 	
+	/*
 	@Autowired
 	private ClientRepository clientRepository; 
 	
@@ -54,4 +45,5 @@ public class AuthService {
 			return (char) (rand.nextInt(26 + 97));
 		}
 	}
+	*/
 }

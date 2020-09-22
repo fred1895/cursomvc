@@ -1,6 +1,5 @@
 package com.coursespringboot.workshop.services;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.coursespringboot.workshop.domain.Client;
-import com.coursespringboot.workshop.domain.ItemPedido;
-import com.coursespringboot.workshop.domain.PagamentoComBoleto;
 import com.coursespringboot.workshop.domain.Pedido;
-import com.coursespringboot.workshop.domain.enums.EstadoPagamento;
-import com.coursespringboot.workshop.repositories.ItemPedidoRepository;
-import com.coursespringboot.workshop.repositories.PagamentoRepository;
 import com.coursespringboot.workshop.repositories.PedidoRepository;
 import com.coursespringboot.workshop.security.UserSS;
 import com.coursespringboot.workshop.services.exceptions.AuthorizationException;
@@ -31,6 +24,7 @@ public class PedidoService {
 	@Autowired
 	private ClientService clientService;
 	
+	/*
 	@Autowired
 	private BoletoService boletoService;
 	
@@ -42,9 +36,12 @@ public class PedidoService {
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	*/
 	
+	/*
 	@Autowired
 	private MailService mailService;
+	*/
 	
 	public Pedido findById(Integer id) {
 	Optional<Pedido> obj = repo.findById(id);
@@ -52,6 +49,7 @@ public class PedidoService {
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 	
+	/*
 	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
@@ -75,7 +73,7 @@ public class PedidoService {
 		mailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
-	
+	*/
 	
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS userSS = UserService.authenticated();

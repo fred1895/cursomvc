@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.coursespringboot.workshop.services.exceptions.FileException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +35,7 @@ public class S3Service {
 			inputStream = multipartFile.getInputStream();
 			return uploadFileAWS(filename, inputStream, contentType);
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao buscar arquivo " + e.getMessage());
+			throw new FileException("Erro ao buscar arquivo " + e.getMessage());
 		}
 	}
 
@@ -50,7 +51,7 @@ public class S3Service {
 
 			return s3Client.getUrl(bucketName, filename).toURI();
 		} catch (URISyntaxException e) {
-			throw new RuntimeException("Erro ao converter URI" + e.getMessage());
+			throw new FileException("Erro ao converter URI" + e.getMessage());
 		}
 	}
 }

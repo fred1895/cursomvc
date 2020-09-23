@@ -33,13 +33,13 @@ public class S3Service {
 			InputStream inputStream;
 			String contentType = multipartFile.getContentType();
 			inputStream = multipartFile.getInputStream();
-			return uploadFileAWS(filename, inputStream, contentType);
+			return uploadFileAWS(inputStream, filename, contentType);
 		} catch (IOException e) {
 			throw new FileException("Erro ao buscar arquivo " + e.getMessage());
 		}
 	}
 
-	private URI uploadFileAWS(String filename, InputStream inputStream, String contentType) {
+	public URI uploadFileAWS(InputStream inputStream, String filename, String contentType) {
 
 		try {
 			ObjectMetadata metadata = new ObjectMetadata();

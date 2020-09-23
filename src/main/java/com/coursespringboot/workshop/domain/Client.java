@@ -50,9 +50,6 @@ public class Client implements Serializable {
 	@CollectionTable(name = "PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
 
-	private String imgURL;
-	
-	
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
@@ -146,14 +143,6 @@ public class Client implements Serializable {
 
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCode());
-	}
-
-	public String getImgURL() {
-		return imgURL;
-	}
-
-	public void setImgURL(String imgURL) {
-		this.imgURL = imgURL;
 	}
 
 }

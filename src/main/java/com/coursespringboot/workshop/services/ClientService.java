@@ -1,5 +1,6 @@
 package com.coursespringboot.workshop.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.coursespringboot.workshop.domain.Cidade;
 import com.coursespringboot.workshop.domain.Client;
@@ -36,6 +38,9 @@ public class ClientService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public Client findById(Integer id) {
 		UserSS userSS = UserService.authenticated();
@@ -104,5 +109,9 @@ public class ClientService {
 			cli.getTelefones().add(objDTO.getTelefone3());
 		}
 		return cli;
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }
